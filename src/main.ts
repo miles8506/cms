@@ -1,4 +1,14 @@
-import { createApp } from 'vue';
 import App from './App.vue';
+import { createApp } from 'vue';
+import { router } from './router/index';
+import store from './store/index';
+import { registerGlobalApp } from './global';
+import './service';
+// import { BASE_URL, BASE_NAME } from './service/config';
 
-createApp(App).mount('#app');
+const app = createApp(App);
+app.use(router);
+app.use(store);
+// register element-plus/
+app.use(registerGlobalApp);
+app.mount('#app');
