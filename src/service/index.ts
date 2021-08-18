@@ -1,57 +1,27 @@
-import axios from 'axios';
+import { apiRequest } from './request';
+import { BASE_URL, TIMEOUT } from './request/config';
 
-axios
-  .all([
-    axios
-      .post(
-        '/post',
-        {
-          data: {
-            name: 'miles',
-            age: 40
-          }
-        },
-        {
-          baseURL: 'http://httpbin.org',
-          timeout: 3000
-        }
-      )
-      .then((res) => {
-        console.log(res);
-      }),
-    axios
-      .request({
-        method: 'get',
-        url: '/get',
-        timeout: 4000,
-        baseURL: 'http://httpbin.org'
-      })
-      .then((res) => {
-        console.log(res);
-      })
-  ])
-  .then((res) => {
-    console.log(res);
-  });
-
-axios.interceptors.request.use(
-  (config) => {
-    console.log('請求成功');
-    return config;
-  },
-  (config) => {
-    console.log('請求失敗');
-    return config;
+const ApiRequest = new apiRequest({
+  baseURL: BASE_URL,
+  timeout: TIMEOUT,
+  interceptors: {
+    requestInterceptors: (config) => {
+      console.log('請求前捕獲');
+      return config;
+    },
+    requestInterceptorsCatch: (err) => {
+      console.log('請求前捕獲失敗');
+      return err;
+    },
+    responseInterceptors: (config) => {
+      console.log('請求後捕獲');
+      return config;
+    },
+    responseInterceptorsCatch: (err) => {
+      console.log('請求後捕獲失敗');
+      return err;
+    }
   }
-);
+});
 
-axios.interceptors.response.use(
-  (res) => {
-    console.log('響應成功');
-    return res.data;
-  },
-  (res) => {
-    console.log('響應失敗');
-    return res.data;
-  }
-);
+export { ApiRequest };
