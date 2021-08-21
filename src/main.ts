@@ -13,7 +13,17 @@ app.use(store);
 // register element-plus/
 app.use(registerGlobalApp);
 app.mount('#app');
-ApiRequest.request({
+
+interface dataType {
+  data: any;
+  returnCode: string;
+  success: boolean;
+}
+
+ApiRequest.request<dataType>({
   url: '/home/multidata',
-  method: 'GET'
+  method: 'GET',
+  showLoadingStatus: false
+}).then((res) => {
+  console.log(res);
 });

@@ -5,20 +5,25 @@ const ApiRequest = new apiRequest({
   baseURL: BASE_URL,
   timeout: TIMEOUT,
   interceptors: {
-    requestInterceptors: (config) => {
-      console.log('請求前捕獲');
+    interceptorRequest: (config) => {
+      // 夾帶token
+      const token = '';
+      if (token) config.headers.Authorization = token;
+
       return config;
     },
-    requestInterceptorsCatch: (err) => {
-      console.log('請求前捕獲失敗');
-      return err;
+    interceptorResponse: (res) => {
+      // axios直接獲取data數據
+      const data = res.data;
+      // 接收資料後去判斷是否成功獲取
+      if (data.returnCode === '-1001') window.alert('response err');
+
+      return data;
     },
-    responseInterceptors: (config) => {
-      console.log('請求後捕獲');
-      return config;
-    },
-    responseInterceptorsCatch: (err) => {
-      console.log('請求後捕獲失敗');
+    interceptorResponseCatch: (err) => {
+      // 接收資料後去判斷是否成功獲取
+      if (err.response.status === 404) window.alert('response err');
+
       return err;
     }
   }
