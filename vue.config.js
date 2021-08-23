@@ -8,7 +8,8 @@ module.exports = {
       alias: {
         '@': path.resolve(__dirname, 'src'),
         components: '@/components',
-        views: '@/views'
+        views: '@/views',
+        assets: '@/assets'
       }
     }
   }

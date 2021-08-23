@@ -1,7 +1,14 @@
+// base vue
 import App from './App.vue';
 import { createApp } from 'vue';
 import { router } from './router/index';
 import store from './store/index';
+
+// css
+import 'normalize.css';
+import '@/assets/less/base/base.less';
+
+// else
 import { registerGlobalApp } from './global';
 import './service';
 import { ApiRequest } from './service';
@@ -25,5 +32,5 @@ ApiRequest.request<dataType>({
   method: 'GET',
   showLoadingStatus: false
 }).then((res) => {
-  console.log(res);
+  return res;
 });
