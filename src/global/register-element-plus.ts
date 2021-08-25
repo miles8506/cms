@@ -7,10 +7,21 @@ import {
   ElTabs,
   ElTabPane,
   ElForm,
-  ElFormItem
+  ElFormItem,
+  ElCheckbox,
+  ElLink
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/base.css';
-const Elcomponents = [ElButton, ElInput, ElTabs, ElTabPane, ElForm, ElFormItem];
+const Elcomponents = [
+  ElButton,
+  ElInput,
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElCheckbox,
+  ElLink
+];
 
 export function registerElementPlus(app: App<Element>): void {
   Elcomponents.forEach((Elcomponent) => {
