@@ -1,8 +1,6 @@
-const path = require('path'); //想要使用node.js的require方式
-
+const path = require('path');
 module.exports = {
   publicPath: './',
-  // //使用configureWebpack方式，是會在compiler時與webpack一起合併
   configureWebpack: {
     resolve: {
       alias: {
@@ -10,6 +8,16 @@ module.exports = {
         components: '@/components',
         views: '@/views',
         assets: '@/assets'
+      }
+    },
+    devServer: {
+      proxy: {
+        '/api': {
+          target: 'http://152.136.185.210:5000',
+          pathRewrite: { '^/api': '' },
+          secure: false,
+          changeOrigin: true
+        }
       }
     }
   }

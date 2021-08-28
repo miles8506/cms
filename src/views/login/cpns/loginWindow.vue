@@ -3,18 +3,18 @@
     <div class="login_wrap">
       <h2 class="title">後台管理系統</h2>
       <!-- login form start -->
-      <el-tabs type="border-card" stretch>
-        <el-tab-pane>
+      <el-tabs type="border-card" stretch v-model="Mpcformat">
+        <el-tab-pane name="pc">
           <template #label>
             <span><i class="el-icon-user"></i> 帳號登入</span>
           </template>
           <account-format ref="accountFormatRef" />
         </el-tab-pane>
-        <el-tab-pane>
+        <el-tab-pane name="phone">
           <template #label>
             <span><i class="el-icon-mobile-phone"></i> 手機登入</span>
           </template>
-          <phone-format />
+          <phone-format ref="phoneFormatRef" />
         </el-tab-pane>
       </el-tabs>
       <!-- login form end -->
@@ -44,6 +44,7 @@ import PhoneFormat from '@/views/login/cpns/phoneFormat.vue';
 
 // type
 import validateAction from './accountFormat.vue';
+import verifyAction from './phoneFormat.vue';
 
 export default defineComponent({
   components: {
@@ -52,16 +53,23 @@ export default defineComponent({
   },
   setup() {
     const accountFormatRef = ref<InstanceType<typeof validateAction>>();
+    const phoneFormatRef = ref<InstanceType<typeof verifyAction>>();
     const isCheckMember = ref(true);
+    const Mpcformat = ref('pc');
 
     // 點擊登入
     const loginClick = () => {
-      accountFormatRef.value?.validateAction(isCheckMember.value);
+      if (Mpcformat.value === 'pc')
+        accountFormatRef.value?.validateAction(isCheckMember.value);
+      else if (Mpcformat.value === 'phone')
+        phoneFormatRef.value?.verifyAction(isCheckMember.value);
     };
     return {
       accountFormatRef,
-      loginClick,
-      isCheckMember
+      phoneFormatRef,
+      isCheckMember,
+      Mpcformat,
+      loginClick
     };
   }
 });

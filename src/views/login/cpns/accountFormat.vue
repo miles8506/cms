@@ -1,8 +1,13 @@
 <template>
   <div id="account_format">
-    <el-form :rules="rules_pc" :model="accountInfo" ref="validateFormat">
-      <el-form-item label="帳號:" prop="account"
-        ><el-input v-model="accountInfo.account"></el-input>
+    <el-form
+      :rules="rules_pc"
+      :model="accountInfo"
+      ref="validateFormat"
+      hide-required-asterisk="false"
+    >
+      <el-form-item label="帳號:" prop="name"
+        ><el-input v-model="accountInfo.name"></el-input>
       </el-form-item>
       <el-form-item label="密碼:" prop="password"
         ><el-input v-model="accountInfo.password" type="password"></el-input>
@@ -15,6 +20,9 @@
 // vue
 import { defineComponent, reactive, ref } from 'vue';
 
+// vuex
+import { useStore } from 'vuex';
+
 // config
 import { rules_pc } from '../config/accountConfig';
 
@@ -26,8 +34,9 @@ import { localCache } from '@/utils/cache';
 
 export default defineComponent({
   setup() {
+    const store = useStore();
     const accountInfo = reactive({
-      account: localCache.getLocalAccount('account') ?? '',
+      name: localCache.getLocalAccount('account') ?? '',
       password: localCache.getLocalAccount('psw') ?? ''
     });
     const validateFormat = ref<InstanceType<typeof ElForm>>();
@@ -36,7 +45,7 @@ export default defineComponent({
         if (valid) {
           // localstorage 判斷是否儲存帳號與密碼
           if (isCheckMember) {
-            localCache.setLocalAccount('account', accountInfo.account);
+            localCache.setLocalAccount('account', accountInfo.name);
             localCache.setLocalAccount('psw', accountInfo.password);
           } else {
             localCache.removeLocalAccount('account');
@@ -44,6 +53,7 @@ export default defineComponent({
           }
         }
       });
+      store.dispatch('loginModule/getLoginApi', accountInfo);
     };
     return {
       accountInfo,

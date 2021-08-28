@@ -1,15 +1,20 @@
+// vuex
 import { createStore } from 'vuex';
 
-const store = createStore({
+// type
+import { IrootStore } from './type';
+
+// module
+import { loginModule } from './login/login';
+
+const store = createStore<IrootStore>({
   state() {
-    return {
-      name: 'miles'
-    };
+    return {};
   },
   mutations: {},
   getters: {},
   actions: {},
-  modules: {}
+  modules: { loginModule }
 });
 
 export default store;
