@@ -13,4 +13,9 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+#app {
+  width: 100%;
+  height: 100vh;
+}
+</style>

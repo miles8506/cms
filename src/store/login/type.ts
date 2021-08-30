@@ -1,7 +1,7 @@
 interface loginType {
-  id: number;
   token: string;
   userInfo: any;
+  userMenu: any;
 }
 
 export { loginType };

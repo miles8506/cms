@@ -1,0 +1,20 @@
+.aside_menu .logo_wrap {
+  display: flex;
+  text-align: center;
+  width: 210px;
+  height: 48px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.aside_menu .logo_wrap .img {
+  width: 30px;
+  height: 30px;
+}
+.aside_menu .logo_wrap .title {
+  flex: 1;
+  margin-left: 20px;
+  text-align: left;
+  line-height: 38px;
+  color: #fff;
+  font-weight: 700;
+}

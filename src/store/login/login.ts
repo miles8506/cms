@@ -2,42 +2,71 @@
 import { Module } from 'vuex';
 
 // api
-import { loginApiFn } from '@/service/login/login';
+import { loginApiFn, userMenuApiFn, userInfoFn } from '@/service/login/login';
+
+// router
+import { router } from '../../router/index';
 
 // type
 import type { loginType } from './type';
 import type { IrootStore } from '../type';
 import type { IaccountInfo } from '@/service/login/type';
 
+// utils
+import { localCache } from '@/utils/cache';
+
 const loginModule: Module<loginType, IrootStore> = {
   namespaced: true,
   state() {
     return {
-      id: 0,
       token: '',
-      userInfo: {}
+      userInfo: {},
+      userMenu: ''
     };
   },
   mutations: {
     changeLoginInfo(state, payload) {
-      state.id = payload.id;
       state.token = payload.token;
+    },
+    changeUserInfo(state, payload) {
+      state.userInfo = payload.info;
+    },
+    changeLoginMenu(state, payload) {
+      state.userMenu = payload.menu;
     }
   },
   actions: {
-    getLoginApi({ commit }, payload: IaccountInfo) {
-      loginApiFn(payload)
-        .then((res) => {
-          const { id, token } = res.data;
-          commit('changeLoginInfo', { id, token });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async getLoginApi({ commit }, payload: IaccountInfo) {
+      // 驗證帳號密碼及接收token
+      const loginApi = await loginApiFn(payload);
+      const { token } = loginApi.data;
+      commit('changeLoginInfo', { token });
+      localCache.setLocalAccount('token', token);
+
+      // 獲取user info
+      const userInfo = await userInfoFn(loginApi.data.id);
+      commit('changeUserInfo', { info: userInfo.data.role });
+      localCache.setLocalAccount('info', userInfo.data.role);
+
+      // 獲取user 權限
+      const userMenuApi = await userMenuApiFn(userInfo.data.role.id);
+      commit('changeLoginMenu', { menu: userMenuApi.data });
+      localCache.setLocalAccount('user_menu', userMenuApi.data);
+      router.push('/main');
     },
-    getLoginPhone(context, payload: any) {
-      console.log(payload);
-      console.log(context);
+    setupUserInfo({ commit }) {
+      const token: string = localCache.getLocalAccount('token');
+      if (token) {
+        commit('changeLoginInfo', { token });
+      }
+      const info = localCache.getLocalAccount('info');
+      if (info) {
+        commit('changeUserInfo', { info });
+      }
+      const menu = localCache.getLocalAccount('user_menu');
+      if (menu) {
+        commit('changeLoginMenu', { menu });
+      }
     }
   },
   getters: {}

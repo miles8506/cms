@@ -9,7 +9,15 @@ import {
   ElForm,
   ElFormItem,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItemGroup,
+  ElMenuItem
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/base.css';
 const Elcomponents = [
@@ -20,7 +28,15 @@ const Elcomponents = [
   ElForm,
   ElFormItem,
   ElCheckbox,
-  ElLink
+  ElLink,
+  ElContainer,
+  ElAside,
+  ElHeader,
+  ElMain,
+  ElMenu,
+  ElSubmenu,
+  ElMenuItemGroup,
+  ElMenuItem
 ];
 
 export function registerElementPlus(app: App<Element>): void {

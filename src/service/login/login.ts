@@ -11,3 +11,17 @@ export function loginApiFn(loginInfo: IaccountInfo) {
     showLoadingStatus: false
   });
 }
+
+export function userMenuApiFn(id: number) {
+  return ApiRequest.get<IDataType>({
+    url: 'role/' + id + '/menu',
+    showLoadingStatus: false
+  });
+}
+
+export function userInfoFn(id: number) {
+  return ApiRequest.get<IDataType>({
+    url: 'users/' + id,
+    showLoadingStatus: false
+  });
+}

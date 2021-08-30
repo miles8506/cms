@@ -1,13 +1,15 @@
 import { apiRequest } from './request';
 import { BASE_URL, TIMEOUT } from './request/config';
 
+import { localCache } from '@/utils/cache';
+
 const ApiRequest = new apiRequest({
   baseURL: BASE_URL,
   timeout: TIMEOUT,
   interceptors: {
     interceptorRequest: (config) => {
       // 夾帶token
-      const token = '';
+      const token = localCache.getLocalAccount('token');
       if (token) config.headers.Authorization = token;
 
       return config;

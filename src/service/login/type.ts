@@ -9,7 +9,7 @@ interface IloginData {
   token: string;
 }
 
-interface IDataType<T> {
+interface IDataType<T = any> {
   code: number;
   data: T;
 }
