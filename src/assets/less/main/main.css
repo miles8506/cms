@@ -17,3 +17,10 @@
   background-color: #f0f2f5;
   color: #333;
 }
+#main .el-aside {
+  transition: width 0.3s linear;
+  scrollbar-width: none;
+  /* firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
+}

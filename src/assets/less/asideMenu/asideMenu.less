@@ -1,4 +1,5 @@
 .aside_menu {
+  // logo
   .logo_wrap {
     display: flex;
     text-align: center;
@@ -9,6 +10,7 @@
     .img {
       width: 30px;
       height: 30px;
+      margin-left: 5px;
     }
     .title {
       flex: 1;
@@ -19,4 +21,21 @@
       font-weight: 700;
     }
   }
+
+  // aside menu
+  .aside_menu {
+    .el-menu {
+      border-right: 0 !important;
+      .el-menu-item {
+        &:hover {
+          color: #fff !important;
+        }
+      }
+    }
+  }
+}
+
+.is-active {
+  background-color: #0a60bd !important;
+  color: #fff !important;
 }

@@ -9,6 +9,7 @@
 .aside_menu .logo_wrap .img {
   width: 30px;
   height: 30px;
+  margin-left: 5px;
 }
 .aside_menu .logo_wrap .title {
   flex: 1;
@@ -17,4 +18,14 @@
   line-height: 38px;
   color: #fff;
   font-weight: 700;
+}
+.aside_menu .aside_menu .el-menu {
+  border-right: 0 !important;
+}
+.aside_menu .aside_menu .el-menu .el-menu-item:hover {
+  color: #fff !important;
+}
+.is-active {
+  background-color: #0a60bd !important;
+  color: #fff !important;
 }

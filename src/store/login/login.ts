@@ -37,22 +37,26 @@ const loginModule: Module<loginType, IrootStore> = {
   },
   actions: {
     async getLoginApi({ commit }, payload: IaccountInfo) {
-      // 驗證帳號密碼及接收token
-      const loginApi = await loginApiFn(payload);
-      const { token } = loginApi.data;
-      commit('changeLoginInfo', { token });
-      localCache.setLocalAccount('token', token);
+      try {
+        // 驗證帳號密碼及接收token
+        const loginApi = await loginApiFn(payload);
+        const { token } = loginApi.data;
+        commit('changeLoginInfo', { token });
+        localCache.setLocalAccount('token', token);
 
-      // 獲取user info
-      const userInfo = await userInfoFn(loginApi.data.id);
-      commit('changeUserInfo', { info: userInfo.data.role });
-      localCache.setLocalAccount('info', userInfo.data.role);
+        // 獲取user info
+        const userInfo = await userInfoFn(loginApi.data.id);
+        commit('changeUserInfo', { info: userInfo.data.role });
+        localCache.setLocalAccount('info', userInfo.data.role);
 
-      // 獲取user 權限
-      const userMenuApi = await userMenuApiFn(userInfo.data.role.id);
-      commit('changeLoginMenu', { menu: userMenuApi.data });
-      localCache.setLocalAccount('user_menu', userMenuApi.data);
-      router.push('/main');
+        // 獲取user 權限
+        const userMenuApi = await userMenuApiFn(userInfo.data.role.id);
+        commit('changeLoginMenu', { menu: userMenuApi.data });
+        localCache.setLocalAccount('user_menu', userMenuApi.data);
+        router.push('/main');
+      } catch (err) {
+        console.log(err);
+      }
     },
     setupUserInfo({ commit }) {
       const token: string = localCache.getLocalAccount('token');

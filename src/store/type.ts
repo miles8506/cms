@@ -5,7 +5,7 @@ interface IrootStore {
 }
 
 interface IrootStoreWithModule {
-  login: loginType;
+  loginModule: loginType;
 }
 
 type IrootStoreMain = IrootStore & IrootStoreWithModule;
