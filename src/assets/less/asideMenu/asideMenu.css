@@ -1,7 +1,6 @@
 .aside_menu .logo_wrap {
   display: flex;
   text-align: center;
-  width: 210px;
   height: 48px;
   padding: 8px 10px;
   cursor: pointer;
@@ -9,7 +8,7 @@
 .aside_menu .logo_wrap .img {
   width: 30px;
   height: 30px;
-  margin-left: 5px;
+  margin-left: 8px;
 }
 .aside_menu .logo_wrap .title {
   flex: 1;

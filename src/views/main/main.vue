@@ -1,14 +1,18 @@
 <template>
   <div id="main">
     <el-container class="main_container">
-      <el-aside :width="foldStatus ? '60px' : '210px'" class="main_aside">
+      <el-aside :width="foldStatus ? '64px' : '210px'" class="main_aside">
         <aside-menu :foldStatus="foldStatus" />
       </el-aside>
       <el-container class="main_right">
         <el-header id="header">
           <main-header @changeFoldStatus="changeFoldStatus" />
         </el-header>
-        <el-main id="main_box">Main</el-main>
+        <el-main id="main_box">
+          <div class="page_info">
+            <router-view></router-view>
+          </div>
+        </el-main>
       </el-container>
     </el-container>
   </div>

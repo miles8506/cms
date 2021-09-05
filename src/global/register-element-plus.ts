@@ -17,7 +17,16 @@ import {
   ElMenu,
   ElSubmenu,
   ElMenuItemGroup,
-  ElMenuItem
+  ElMenuItem,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElAvatar,
+  ElCol,
+  ElRow,
+  ElSelect,
+  ElOption,
+  ElDatePicker
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/base.css';
 const Elcomponents = [
@@ -36,7 +45,16 @@ const Elcomponents = [
   ElMenu,
   ElSubmenu,
   ElMenuItemGroup,
-  ElMenuItem
+  ElMenuItem,
+  ElDropdown,
+  ElDropdownItem,
+  ElDropdownMenu,
+  ElAvatar,
+  ElCol,
+  ElRow,
+  ElSelect,
+  ElOption,
+  ElDatePicker
 ];
 
 export function registerElementPlus(app: App<Element>): void {

@@ -2,13 +2,13 @@
   <div class="aside_menu">
     <div class="logo_wrap">
       <img src="~@/assets/img/logo.svg" alt="" class="img" />
-      <div class="title">Vue3 CMS</div>
+      <div class="title" v-show="!foldStatus">Vue3 CMS</div>
     </div>
     <aside class="aside_menu">
       <el-menu
         :collapse="foldStatus"
         :uniqueOpened="false"
-        default-active="2"
+        :default-active="currentId"
         class="el-menu-vertical"
         background-color="#0c2135"
         text-color="#b7bdc3"
@@ -25,8 +25,10 @@
                 v-for="subitem in item.children"
                 :key="subitem.id + ''"
                 :index="subitem.id + ''"
+                @click="goAsideItem(subitem)"
               >
                 {{ subitem.name }}
+                {{ subitem.id }}
               </el-menu-item>
             </el-submenu>
           </template>
@@ -37,8 +39,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { useStore } from '@/store';
+import { useRouter, useRoute } from 'vue-router';
+
+//utils
+import { mapToPath } from '@/utils/mapMenu';
 
 export default defineComponent({
   props: {
@@ -48,10 +54,28 @@ export default defineComponent({
     }
   },
   setup() {
+    // store
     const store = useStore();
-    const userMenus = store.state.loginModule.userMenu;
+    const userMenus = computed(() => store.state.loginModule.userMenu);
+
+    // router
+    const router = useRouter();
+    const route = useRoute();
+    const currentIndex = route.path;
+
+    // remember indexId at refresh
+    const currentId = ref(mapToPath(userMenus.value, currentIndex));
+
+    // handler event
+    const goAsideItem = (subitem: any) => {
+      router.push({
+        path: subitem.url ?? '/notFound'
+      });
+    };
     return {
-      userMenus
+      userMenus,
+      goAsideItem,
+      currentId
     };
   }
 });

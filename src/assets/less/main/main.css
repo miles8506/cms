@@ -17,6 +17,9 @@
   background-color: #f0f2f5;
   color: #333;
 }
+#main .main_container .main_right #main_box .page_info {
+  background-color: #fff;
+}
 #main .el-aside {
   transition: width 0.3s linear;
   scrollbar-width: none;

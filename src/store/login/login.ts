@@ -11,9 +11,13 @@ import { router } from '../../router/index';
 import type { loginType } from './type';
 import type { IrootStore } from '../type';
 import type { IaccountInfo } from '@/service/login/type';
+import type { RouteRecordRaw } from 'vue-router';
 
 // utils
 import { localCache } from '@/utils/cache';
+
+// user mapMenu
+import { mapMenu } from '@/utils/mapMenu';
 
 const loginModule: Module<loginType, IrootStore> = {
   namespaced: true,
@@ -33,6 +37,15 @@ const loginModule: Module<loginType, IrootStore> = {
     },
     changeLoginMenu(state, payload) {
       state.userMenu = payload.menu;
+
+      // 動態創建suer menu
+      let mainChildRoute: RouteRecordRaw[] = [];
+
+      // 動態獲取user menu
+      mainChildRoute = mapMenu(payload.menu);
+      mainChildRoute.forEach((route) => {
+        router.addRoute('main', route);
+      });
     }
   },
   actions: {
