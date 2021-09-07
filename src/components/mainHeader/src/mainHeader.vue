@@ -6,21 +6,33 @@
       @click="changeFoldImg"
     ></i>
     <div class="header_bar">
-      <div class="toast">麵包屑</div>
+      <div class="toast">
+        <breadcrumb :breadArrItem="breadArrItem" />
+      </div>
       <user-select />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from '@/store';
 
 // components
 import UserSelect from './cpns/userSelect.vue';
+import Breadcrumb from '@/base-ui/breadcrumb';
+
+//type
+import type { Ibreadcrumb } from '@/base-ui/breadcrumb/type/type';
+
+// utils
+import { mapBreadcrump } from '@/utils/mapMenu';
 
 export default defineComponent({
   components: {
-    UserSelect
+    UserSelect,
+    Breadcrumb
   },
   emits: ['changeFoldStatus'],
 
@@ -30,9 +42,21 @@ export default defineComponent({
       foldStatus.value = !foldStatus.value;
       emit('changeFoldStatus', foldStatus.value);
     };
+
+    // breadcrumb
+    const route = useRoute();
+    const store = useStore();
+    const breadArrItem = computed(() => {
+      const currentPath = route.path;
+      const userMenu = store.state.loginModule.userMenu;
+      const breadcrumbArr: Ibreadcrumb[] = [];
+      return mapBreadcrump(userMenu, currentPath, breadcrumbArr);
+    });
+
     return {
       foldStatus,
-      changeFoldImg
+      changeFoldImg,
+      breadArrItem
     };
   }
 });

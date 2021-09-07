@@ -4,10 +4,13 @@ import type { RouteRecordRaw } from 'vue-router';
 // utils
 import { localCache } from '../utils/cache';
 
+// vuex
+import { firstMenu } from '@/store/login/login';
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/main'
   },
   {
     path: '/login',
@@ -35,6 +38,11 @@ export const router = createRouter({
 router.beforeEach((to) => {
   if (to.path !== '/login') {
     const res = localCache.getLocalAccount('token');
-    if (!res) router.push('/login');
+    if (!res) return '/login';
+  }
+
+  // 預設一開始登入的url
+  if (to.path === '/main') {
+    return firstMenu.path;
   }
 });

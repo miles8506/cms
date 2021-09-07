@@ -19,6 +19,8 @@ import { localCache } from '@/utils/cache';
 // user mapMenu
 import { mapMenu } from '@/utils/mapMenu';
 
+let firstMenu: any = null;
+
 const loginModule: Module<loginType, IrootStore> = {
   namespaced: true,
   state() {
@@ -45,6 +47,7 @@ const loginModule: Module<loginType, IrootStore> = {
       mainChildRoute = mapMenu(payload.menu);
       mainChildRoute.forEach((route) => {
         router.addRoute('main', route);
+        if (!firstMenu) firstMenu = route;
       });
     }
   },
@@ -89,4 +92,4 @@ const loginModule: Module<loginType, IrootStore> = {
   getters: {}
 };
 
-export { loginModule };
+export { loginModule, firstMenu };

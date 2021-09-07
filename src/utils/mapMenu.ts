@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
+import type { Ibreadcrumb } from '@/base-ui/breadcrumb/type/type';
 
 // user menu動態獲取
 export function mapMenu(userMenu: any[]): RouteRecordRaw[] {
@@ -30,14 +31,45 @@ export function mapMenu(userMenu: any[]): RouteRecordRaw[] {
 }
 
 // refresh時，記住index
-export function mapToPath(userMenus: any, currentIndex: string) {
+export function mapToPath(
+  userMenus: any,
+  currentIndex: string,
+  breadcrumbArr?: Ibreadcrumb[]
+) {
   for (const menu of userMenus) {
     if (menu.type == 1) {
       const res: any[] = mapToPath(menu.children ?? [], currentIndex);
       const findRes = res.find((item) => item.url === currentIndex);
-      if (findRes) return findRes.id + '';
+      if (findRes) {
+        breadcrumbArr?.push({ name: menu.name });
+        breadcrumbArr?.push({ name: findRes.name });
+        if (breadcrumbArr) return breadcrumbArr;
+        return findRes.id + '';
+      }
     } else if (menu.type == 2) {
       return userMenus;
     }
   }
+}
+
+// 麵包屑
+export function mapBreadcrump(
+  userMenus: any,
+  currentPath: string,
+  breadcrumbArr?: Ibreadcrumb[]
+) {
+  // for (const menu of userMenus) {
+  //   if (menu.type === 1) {
+  //     const res = mapBreadcrump(menu.children, currentPath, breadcrumbArr);
+  //     const resFind = res.find((item: any) => item.url === currentPath);
+  //     if (resFind) {
+  //       breadcrumbArr?.push({ name: menu.name });
+  //       breadcrumbArr?.push({ name: resFind.name });
+  //       return breadcrumbArr;
+  //     }
+  //   } else if (menu.type === 2) {
+  //     return userMenus;
+  //   }
+  // }
+  return mapToPath(userMenus, currentPath, breadcrumbArr);
 }
