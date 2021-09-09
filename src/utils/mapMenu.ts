@@ -37,7 +37,7 @@ export function mapToPath(
   breadcrumbArr?: Ibreadcrumb[]
 ) {
   for (const menu of userMenus) {
-    if (menu.type == 1) {
+    if (menu.type === 1) {
       const res: any[] = mapToPath(menu.children ?? [], currentIndex);
       const findRes = res.find((item) => item.url === currentIndex);
       if (findRes) {
@@ -46,7 +46,7 @@ export function mapToPath(
         if (breadcrumbArr) return breadcrumbArr;
         return findRes.id + '';
       }
-    } else if (menu.type == 2) {
+    } else if (menu.type === 2) {
       return userMenus;
     }
   }
@@ -56,7 +56,7 @@ export function mapToPath(
 export function mapBreadcrump(
   userMenus: any,
   currentPath: string,
-  breadcrumbArr?: Ibreadcrumb[]
+  breadcrumbArr: Ibreadcrumb[]
 ) {
   // for (const menu of userMenus) {
   //   if (menu.type === 1) {
@@ -71,5 +71,6 @@ export function mapBreadcrump(
   //     return userMenus;
   //   }
   // }
+
   return mapToPath(userMenus, currentPath, breadcrumbArr);
 }

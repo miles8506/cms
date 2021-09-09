@@ -1,5 +1,6 @@
 <template>
   <div id="search_form">
+    <slot name="search_header"></slot>
     <el-form label-width="120px">
       <el-row>
         <template v-for="item in formData" :key="item">
@@ -7,17 +8,19 @@
             <!-- type -> input&password -->
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-form-item :label="item.label"
-                ><el-input></el-input>
+                ><el-input v-model="searchDataRef[item.field]"></el-input>
               </el-form-item>
             </template>
             <!-- type -> select -->
             <template v-else-if="item.type === 'select'">
               <el-form-item :label="item.label">
-                <el-select style="width: 100%"
+                <el-select
+                  style="width: 100%"
+                  v-model="searchDataRef[item.field]"
                   ><el-option
                     v-for="option in item.options"
                     :key="option"
-                    :value="item.value"
+                    :value="option.value"
                     >{{ option.label }}</el-option
                   ></el-select
                 >
@@ -29,6 +32,7 @@
                 <el-date-picker
                   style="width: 100%"
                   v-bind="item.otherOptions"
+                  v-model="searchDataRef[item.field]"
                 ></el-date-picker>
               </el-form-item>
             </template>
@@ -36,11 +40,13 @@
         </template>
       </el-row>
     </el-form>
+    <slot name="search_footer"></slot>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
+import { IsearchDataType } from '@/views/main/system/user/config/user.config';
 
 // type
 import { IformType } from '../index';
@@ -68,10 +74,28 @@ export default defineComponent({
         sm: 24,
         xs: 24
       })
+    },
+    searchData: {
+      type: Object as PropType<IsearchDataType>,
+      default: () => ({}),
+      require: true
     }
   },
-  setup() {
-    return {};
+  emits: ['update:searchData'],
+  setup(props, { emit }) {
+    // 監聽v-model(for user.vue組件)數據
+    const searchDataRef = ref({ ...props.searchData });
+    watch(
+      searchDataRef,
+      (newData) => {
+        emit('update:searchData', newData);
+      },
+      { deep: true }
+    );
+
+    return {
+      searchDataRef
+    };
   }
 });
 </script>

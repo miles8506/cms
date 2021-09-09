@@ -1,6 +1,7 @@
 type Type = 'password' | 'input' | 'datepicker' | 'select';
 
 interface IformType {
+  field: string;
   type: Type;
   label: string;
   placeholder?: string;

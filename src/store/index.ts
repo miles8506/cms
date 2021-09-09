@@ -1,11 +1,12 @@
 // vuex
-import { createStore, Store, useStore as useVuxStore } from 'vuex';
+import { createStore, Store, useStore as useVuexStore } from 'vuex';
 
 // type
 import { IrootStore, IrootStoreMain } from './type';
 
 // module
 import { loginModule } from './login/login';
+import { system } from './main/system/system';
 
 const store = createStore<IrootStore>({
   state() {
@@ -14,7 +15,10 @@ const store = createStore<IrootStore>({
   mutations: {},
   getters: {},
   actions: {},
-  modules: { loginModule }
+  modules: {
+    loginModule,
+    system
+  }
 });
 
 export function setupUserInfoFn() {
@@ -22,7 +26,7 @@ export function setupUserInfoFn() {
 }
 
 export function useStore(): Store<IrootStoreMain> {
-  return useVuxStore();
+  return useVuexStore();
 }
 
 export default store;

@@ -28,7 +28,6 @@
                 @click="goAsideItem(subitem)"
               >
                 {{ subitem.name }}
-                {{ subitem.id }}
               </el-menu-item>
             </el-submenu>
           </template>

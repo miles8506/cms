@@ -7,19 +7,29 @@ interface IsearchFormConfig {
   colConfig?: any;
 }
 
+interface IsearchDataType {
+  account?: string;
+  psw?: string;
+  habit?: string;
+  dateRange?: any[];
+}
+
 const searchFormConfig: IsearchFormConfig = {
   formData: [
     {
+      field: 'account',
       type: 'input',
       label: '帳號',
       placeholder: '請輸入查詢帳號'
     },
     {
+      field: 'psw',
       type: 'password',
       label: '密碼',
       placeholder: '請輸入查詢密碼'
     },
     {
+      field: 'habit',
       type: 'select',
       label: '嗜好',
       placeholder: '請選擇嗜好',
@@ -35,6 +45,7 @@ const searchFormConfig: IsearchFormConfig = {
       ]
     },
     {
+      field: 'dateRange',
       type: 'datepicker',
       label: '日期',
       otherOptions: {
@@ -57,4 +68,4 @@ const searchFormConfig: IsearchFormConfig = {
   }
 };
 
-export { searchFormConfig };
+export { searchFormConfig, IsearchDataType };

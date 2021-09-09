@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="user_search">
-      <search-form v-bind="searchFormConfig" />
+      <search-page />
     </div>
     <div id="user_info"></div>
   </div>
@@ -9,19 +9,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { searchFormConfig } from './config/user.config';
+import { useStore } from 'vuex';
 
-// component
-import SearchForm from '@/base-ui/searchForm/';
+// components
+import SearchPage from '@/base-ui/searchPage';
 
 export default defineComponent({
   components: {
-    SearchForm
+    SearchPage
   },
   setup() {
-    return {
-      searchFormConfig
-    };
+    // 獲取userList data
+    const store = useStore();
+    store.dispatch('system/getPageAction', {
+      url: '/users/list',
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    });
+    return {};
   }
 });
 </script>
