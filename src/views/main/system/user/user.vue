@@ -1,34 +1,35 @@
 <template>
   <div>
     <div id="user_search">
-      <search-page />
+      <search-page :searchFormConfig="searchFormConfig" />
     </div>
-    <div id="user_info"></div>
+    <div id="user_info">
+      <table-page :tablePageConfig="tablePageConfig" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
 
 // components
-import SearchPage from '@/base-ui/searchPage';
+import SearchPage from '@/components/searchPage/src/searchPage.vue';
+import TablePage from '@/components/tablePage';
+
+// config
+import { searchFormConfig } from './config/searchPage.config';
+import { tablePageConfig } from './config/tablePage.config';
 
 export default defineComponent({
   components: {
-    SearchPage
+    SearchPage,
+    TablePage
   },
   setup() {
-    // 獲取userList data
-    const store = useStore();
-    store.dispatch('system/getPageAction', {
-      url: '/users/list',
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
-    return {};
+    return {
+      searchFormConfig,
+      tablePageConfig
+    };
   }
 });
 </script>

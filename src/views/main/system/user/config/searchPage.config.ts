@@ -7,12 +7,12 @@ interface IsearchFormConfig {
   colConfig?: any;
 }
 
-interface IsearchDataType {
-  account?: string;
-  psw?: string;
-  habit?: string;
-  dateRange?: any[];
-}
+// interface IsearchDataType {
+//   account?: string;
+//   psw?: string;
+//   habit?: string;
+//   dateRange?: any[];
+// }
 
 const searchFormConfig: IsearchFormConfig = {
   formData: [
@@ -68,4 +68,4 @@ const searchFormConfig: IsearchFormConfig = {
   }
 };
 
-export { searchFormConfig, IsearchDataType };
+export { searchFormConfig };

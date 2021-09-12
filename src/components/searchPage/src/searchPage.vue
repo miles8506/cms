@@ -16,10 +16,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import {
-  searchFormConfig,
-  IsearchDataType
-} from '@/views/main/system/user/config/user.config';
 
 // component
 import SearchForm from '@/base-ui/searchForm/';
@@ -28,8 +24,14 @@ export default defineComponent({
   components: {
     SearchForm
   },
+  props: {
+    searchFormConfig: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
-    const searchData = ref<IsearchDataType>({
+    const searchData = ref({
       account: '',
       psw: '',
       habit: '',
@@ -37,7 +39,6 @@ export default defineComponent({
     });
 
     return {
-      searchFormConfig,
       searchData
     };
   }

@@ -1,0 +1,23 @@
+.data_tabel {
+  border-top: 20px #f0f2f5 solid;
+}
+.data_tabel .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.data_tabel .header .header_control,
+.data_tabel .header .title {
+  padding-top: 10px;
+}
+.data_tabel .header .title {
+  font-size: 20px;
+  font-weight: 700;
+}
+.data_tabel .footer {
+  padding: 15px 20px;
+}
+.data_tabel .footer .el-pagination {
+  display: flex;
+  justify-content: flex-end;
+}

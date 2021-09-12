@@ -1,15 +1,26 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <el-config-provider :locale="zhTw">
+      <router-view></router-view>
+    </el-config-provider>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { ElConfigProvider } from 'element-plus';
+import zhTw from 'element-plus/lib/locale/lang/zh-tw';
 
 export default defineComponent({
   name: 'App',
-  components: {}
+  components: {
+    ElConfigProvider
+  },
+  setup() {
+    return {
+      zhTw
+    };
+  }
 });
 </script>
 

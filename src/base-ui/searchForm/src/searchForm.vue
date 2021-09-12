@@ -46,7 +46,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue';
-import { IsearchDataType } from '@/views/main/system/user/config/user.config';
 
 // type
 import { IformType } from '../index';
@@ -76,9 +75,9 @@ export default defineComponent({
       })
     },
     searchData: {
-      type: Object as PropType<IsearchDataType>,
+      type: Object,
       default: () => ({}),
-      require: true
+      required: true
     }
   },
   emits: ['update:searchData'],

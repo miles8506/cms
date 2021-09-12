@@ -28,7 +28,10 @@ import {
   ElOption,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/base.css';
 const Elcomponents = [
@@ -58,7 +61,10 @@ const Elcomponents = [
   ElOption,
   ElDatePicker,
   ElBreadcrumb,
-  ElBreadcrumbItem
+  ElBreadcrumbItem,
+  ElTable,
+  ElTableColumn,
+  ElPagination
 ];
 
 export function registerElementPlus(app: App<Element>): void {
