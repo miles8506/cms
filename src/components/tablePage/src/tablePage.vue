@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- for base-ui>table -->
-    <data-table :userList="userList" v-bind="tablePageConfig">
+    <data-table :userList="dataList" v-bind="tablePageConfig">
       <template #headerControl>
         <el-button type="primary" size="small">小型按钮</el-button>
       </template>
@@ -47,24 +47,30 @@ export default defineComponent({
     tablePageConfig: {
       type: Object,
       required: true
+    },
+    pathName: {
+      type: String,
+      required: true
     }
   },
-  setup() {
+  setup(props) {
     // 獲取userList data
     const store = useStore();
     store.dispatch('system/getPageAction', {
-      url: '/users/list',
+      pathName: props.pathName,
       queryInfo: {
         offset: 0,
         size: 10
       }
     });
 
-    const userList = computed(() => store.state.system.pageList);
-    const pagesCount = computed(() => store.state.system.totalCount);
+    const dataList = computed(() =>
+      store.getters['system/getUrlName'](props.pathName)
+    );
+    // const pagesCount = computed(() => store.state.system.usersCount);
     return {
-      userList,
-      pagesCount
+      dataList
+      // pagesCount
     };
   }
 });

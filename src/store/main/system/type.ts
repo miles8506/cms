@@ -1,6 +1,8 @@
 interface IsystemType {
-  pageList: any[];
-  totalCount: number;
+  usersList: any[];
+  usersCount: number;
+  roleList: any[];
+  roleCount: number;
 }
 
 export { IsystemType };

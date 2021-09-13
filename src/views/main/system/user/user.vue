@@ -4,7 +4,7 @@
       <search-page :searchFormConfig="searchFormConfig" />
     </div>
     <div id="user_info">
-      <table-page :tablePageConfig="tablePageConfig" />
+      <table-page :tablePageConfig="tablePageConfig" pathName="users" />
     </div>
   </div>
 </template>

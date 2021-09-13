@@ -10,27 +10,66 @@ const system: Module<IsystemType, IrootStore> = {
   namespaced: true,
   state() {
     return {
-      pageList: [],
-      totalCount: 0
+      usersList: [],
+      usersCount: 0,
+      roleList: [],
+      roleCount: 0
     };
   },
   mutations: {
-    setPageList(state, payload: any[]) {
-      state.pageList = payload;
+    setUsersList(state, payload: any[]) {
+      state.usersList = payload;
     },
-    setTotalCount(state, payload: number) {
-      state.totalCount = payload;
+    setUsersCount(state, payload: number) {
+      state.usersCount = payload;
+    },
+    setRoleList(state, payload: any[]) {
+      state.roleList = payload;
+    },
+    setRoleCount(state, payload: number) {
+      state.roleCount = payload;
     }
   },
   actions: {
     async getPageAction({ commit }, payload: any) {
       try {
-        const res = await requestSystemPage(payload);
-        commit('setPageList', res.data.list);
-        commit('setTotalCount', res.data.totalCount);
+        const pathName = payload.pathName;
+        let pathUrl = '';
+
+        switch (pathName) {
+          case 'users':
+            pathUrl = '/users/list';
+            break;
+          case 'role':
+            pathUrl = '/role/list';
+            break;
+        }
+
+        const res = await requestSystemPage({
+          url: pathUrl,
+          data: payload.queryInfo
+        });
+
+        const capitalPath =
+          pathName.charAt(0).toUpperCase() + pathName.slice(1);
+
+        commit(`set${capitalPath}List`, res.data.list);
+        commit(`set${capitalPath}Count`, res.data.totalCount);
       } catch (err) {
         console.log(err);
       }
+    }
+  },
+  getters: {
+    getUrlName(state) {
+      return function (pathName: string) {
+        switch (pathName) {
+          case 'users':
+            return state.usersList;
+          case 'role':
+            return state.roleList;
+        }
+      };
     }
   }
 };
