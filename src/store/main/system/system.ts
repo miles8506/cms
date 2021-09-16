@@ -16,6 +16,7 @@ const system: Module<IsystemType, IrootStore> = {
       roleCount: 0
     };
   },
+
   mutations: {
     setUsersList(state, payload: any[]) {
       state.usersList = payload;
@@ -30,46 +31,47 @@ const system: Module<IsystemType, IrootStore> = {
       state.roleCount = payload;
     }
   },
+
+  getters: {
+    getDataList(state) {
+      return function (pathName: string) {
+        return (state as any)[`${pathName}List`];
+        // switch (pathName) {
+        //   case 'users':
+        //     return state.usersList;
+        //   case 'role':
+        //     return state.roleList;
+        // }
+      };
+    }
+  },
+
   actions: {
     async getPageAction({ commit }, payload: any) {
+      const pathUrl = `${payload.url}/list`;
+      // switch (payload.url) {
+      //   case 'users':
+      //     pathUrl = '/users/list';
+      //     break;
+      //   case 'role':
+      //     pathUrl = '/role/list';
+      //     break;
+      // }
+
+      // 將首字母轉為大寫
+      const capitalPathName =
+        payload.url.charAt(0).toUpperCase() + payload.url.slice(1);
+
       try {
-        const pathName = payload.pathName;
-        let pathUrl = '';
-
-        switch (pathName) {
-          case 'users':
-            pathUrl = '/users/list';
-            break;
-          case 'role':
-            pathUrl = '/role/list';
-            break;
-        }
-
         const res = await requestSystemPage({
           url: pathUrl,
-          data: payload.queryInfo
+          queryInfo: payload.queryInfo
         });
-
-        const capitalPath =
-          pathName.charAt(0).toUpperCase() + pathName.slice(1);
-
-        commit(`set${capitalPath}List`, res.data.list);
-        commit(`set${capitalPath}Count`, res.data.totalCount);
+        commit(`set${capitalPathName}List`, res.data.list);
+        commit(`set${capitalPathName}Count`, res.data.totalCount);
       } catch (err) {
         console.log(err);
       }
-    }
-  },
-  getters: {
-    getUrlName(state) {
-      return function (pathName: string) {
-        switch (pathName) {
-          case 'users':
-            return state.usersList;
-          case 'role':
-            return state.roleList;
-        }
-      };
     }
   }
 };

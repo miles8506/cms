@@ -9,7 +9,7 @@
       </div>
     </slot>
     <el-table
-      :data="userList"
+      :data="dataList"
       @selection-change="handleSelectChange"
       style="width: 100%"
     >
@@ -63,7 +63,7 @@ export default defineComponent({
       type: Array,
       required: true
     },
-    userList: {
+    dataList: {
       type: Array,
       required: true
     },

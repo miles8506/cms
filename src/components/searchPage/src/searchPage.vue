@@ -4,7 +4,9 @@
       <template #search_header></template>
       <template #search_footer>
         <div class="search_btn">
-          <el-button icon="el-icon-refresh-left" size="medium">重置</el-button>
+          <el-button icon="el-icon-refresh-left" size="medium" @click="resetBtn"
+            >重置</el-button
+          >
           <el-button type="primary" icon="el-icon-search" size="medium"
             >搜尋</el-button
           >
@@ -30,16 +32,23 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    const searchData = ref({
-      account: '',
-      psw: '',
-      habit: '',
-      dateRange: []
-    });
+  setup(props) {
+    const searchDataConfig: any = {};
+    const items = props.searchFormConfig.formData;
+    for (const item of items) {
+      searchDataConfig[item.field] = '';
+    }
+    const searchData = ref(searchDataConfig);
+
+    const resetBtn = () => {
+      for (const key in searchDataConfig) {
+        searchData.value[key] = searchDataConfig[key];
+      }
+    };
 
     return {
-      searchData
+      searchData,
+      resetBtn
     };
   }
 });

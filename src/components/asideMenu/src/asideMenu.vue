@@ -62,7 +62,7 @@ export default defineComponent({
     const route = useRoute();
     const currentIndex = route.path;
 
-    // remember indexId at refresh
+    // member indexId at refresh
     const currentId = ref(mapToPath(userMenus.value, currentIndex));
 
     // handler event

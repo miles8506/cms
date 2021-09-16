@@ -17,38 +17,16 @@ interface IsearchFormConfig {
 const searchFormConfig: IsearchFormConfig = {
   formData: [
     {
-      field: 'account',
+      field: 'rolename',
       type: 'input',
-      label: '帳號',
-      placeholder: '請輸入id查詢'
+      label: '角色名稱',
+      placeholder: '請輸入角色名稱查詢'
     },
     {
-      field: 'username',
+      field: 'introname',
       type: 'input',
-      label: '用戶名',
-      placeholder: '請輸入用戶名查詢'
-    },
-    {
-      field: 'psw',
-      type: 'password',
-      label: '密碼',
-      placeholder: '請輸入密碼查詢'
-    },
-    {
-      field: 'habit',
-      type: 'select',
-      label: '嗜好',
-      placeholder: '請選擇嗜好',
-      options: [
-        {
-          label: '籃球',
-          value: 'baseketball'
-        },
-        {
-          label: '足球',
-          value: 'football'
-        }
-      ]
+      label: '權限名稱',
+      placeholder: '請輸入權限名稱查詢'
     },
     {
       field: 'dateRange',
