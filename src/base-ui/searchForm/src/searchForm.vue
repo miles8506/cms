@@ -20,8 +20,8 @@
                   ><el-option
                     v-for="option in item.options"
                     :key="option"
-                    :value="option.value"
-                    >{{ option.label }}</el-option
+                    :value="option.title"
+                    >{{ option.title }}</el-option
                   ></el-select
                 >
               </el-form-item>

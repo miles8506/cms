@@ -1,10 +1,18 @@
 <template>
   <div>
     <div id="user_search">
-      <search-page :searchFormConfig="searchFormConfig" />
+      <search-page
+        :searchFormConfig="searchFormConfig"
+        @searchQuery="searchQuery"
+        @resetQuery="resetQuery"
+      />
     </div>
     <div id="user_info">
-      <table-page :tablePageConfig="tablePageConfig" pathName="users" />
+      <table-page
+        :tablePageConfig="tablePageConfig"
+        pathName="users"
+        ref="tablePageRef"
+      />
     </div>
   </div>
 </template>
@@ -20,15 +28,26 @@ import TablePage from '@/components/tablePage';
 import { searchFormConfig } from './config/searchPage.config';
 import { tablePageConfig } from './config/tablePage.config';
 
+// hook
+import { searchPageControl } from '@/hook/searchPageControl';
+
 export default defineComponent({
   components: {
     SearchPage,
     TablePage
   },
+
   setup() {
+    const { tablePageRef, searchQuery, resetQuery } = {
+      ...searchPageControl()
+    };
+
     return {
       searchFormConfig,
-      tablePageConfig
+      tablePageConfig,
+      tablePageRef,
+      searchQuery,
+      resetQuery
     };
   }
 });

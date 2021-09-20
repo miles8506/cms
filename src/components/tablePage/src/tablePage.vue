@@ -1,9 +1,21 @@
 <template>
   <div>
-    <!-- for base-ui>table -->
-    <data-table :dataList="dataList" v-bind="tablePageConfig">
+    <data-table
+      :dataList="dataList"
+      v-bind="tablePageConfig"
+      :dataListCount="dataListCount"
+      v-model:page="paginationData"
+    >
       <template #headerControl>
         <el-button type="primary" size="small">小型按钮</el-button>
+      </template>
+      <template #goodsImg="scope">
+        <el-image
+          style="width: 100px; height: 100px"
+          :src="scope.row.imgUrl"
+          :preview-src-list="[scope.row.imgUrl]"
+        >
+        </el-image>
       </template>
       <template #status="scope">
         <el-button
@@ -33,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref, watch } from 'vue';
 import { useStore } from '@/store';
 
 //component
@@ -56,21 +68,45 @@ export default defineComponent({
   setup(props) {
     // 獲取userList data
     const store = useStore();
-    store.dispatch('system/getPageAction', {
-      url: props.pathName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
 
+    // pagination
+    const paginationData = ref({
+      currentPage: 0,
+      pageSize: 10
+    });
+    watch(paginationData, () => getPageAciton());
+
+    // get table data
+    const getPageAciton = (searchData: any = {}) => {
+      let page = 0;
+      if (paginationData.value.currentPage !== 0)
+        page = paginationData.value.currentPage - 1;
+      store.dispatch('system/getPageAction', {
+        url: props.pathName,
+        queryInfo: {
+          offset: page * paginationData.value.pageSize,
+          size: paginationData.value.pageSize,
+          ...searchData.value
+        }
+      });
+    };
+    getPageAciton();
+
+    // table data
     const dataList = computed(() =>
       store.getters['system/getDataList'](props.pathName)
     );
-    // const pagesCount = computed(() => store.state.system.usersCount);
+
+    // totalPages(總頁數)
+    const dataListCount = computed(() =>
+      store.getters[`system/getDataCount`](props.pathName)
+    );
+
     return {
-      dataList
-      // pagesCount
+      dataList,
+      getPageAciton,
+      paginationData,
+      dataListCount
     };
   }
 });

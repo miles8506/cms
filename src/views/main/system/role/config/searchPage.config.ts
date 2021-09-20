@@ -17,27 +17,27 @@ interface IsearchFormConfig {
 const searchFormConfig: IsearchFormConfig = {
   formData: [
     {
-      field: 'rolename',
+      field: 'name',
       type: 'input',
       label: '角色名稱',
       placeholder: '請輸入角色名稱查詢'
     },
     {
-      field: 'introname',
+      field: 'intro',
       type: 'input',
       label: '權限名稱',
       placeholder: '請輸入權限名稱查詢'
-    },
-    {
-      field: 'dateRange',
-      type: 'datepicker',
-      label: '創建時間',
-      otherOptions: {
-        type: 'daterange',
-        startPlaceholder: '開始日期',
-        endPlaceholder: '結束日期'
-      }
     }
+    // {
+    //   field: 'createTime',
+    //   type: 'datepicker',
+    //   label: '創建時間',
+    //   otherOptions: {
+    //     type: 'daterange',
+    //     startPlaceholder: '開始日期',
+    //     endPlaceholder: '結束日期'
+    //   }
+    // }
   ],
   itemStyle: {
     padding: '10px 40px'

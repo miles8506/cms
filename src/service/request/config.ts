@@ -1,5 +1,5 @@
 let BASE_URL = '';
-const TIMEOUT = 5000;
+const TIMEOUT = 10000;
 
 if (process.env.NODE_ENV === 'development') {
   BASE_URL = '/api';

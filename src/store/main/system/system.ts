@@ -13,7 +13,9 @@ const system: Module<IsystemType, IrootStore> = {
       usersList: [],
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0
     };
   },
 
@@ -29,6 +31,12 @@ const system: Module<IsystemType, IrootStore> = {
     },
     setRoleCount(state, payload: number) {
       state.roleCount = payload;
+    },
+    setGoodsList(state, payload: any[]) {
+      state.goodsList = payload;
+    },
+    setGoodsCount(state, payload: number) {
+      state.goodsCount = payload;
     }
   },
 
@@ -43,12 +51,19 @@ const system: Module<IsystemType, IrootStore> = {
         //     return state.roleList;
         // }
       };
+    },
+
+    getDataCount(state) {
+      return function (pathName: string) {
+        return (state as any)[`${pathName}Count`];
+      };
     }
   },
 
   actions: {
     async getPageAction({ commit }, payload: any) {
       const pathUrl = `${payload.url}/list`;
+
       // switch (payload.url) {
       //   case 'users':
       //     pathUrl = '/users/list';
@@ -58,7 +73,6 @@ const system: Module<IsystemType, IrootStore> = {
       //     break;
       // }
 
-      // 將首字母轉為大寫
       const capitalPathName =
         payload.url.charAt(0).toUpperCase() + payload.url.slice(1);
 

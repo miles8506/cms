@@ -7,7 +7,11 @@
           <el-button icon="el-icon-refresh-left" size="medium" @click="resetBtn"
             >重置</el-button
           >
-          <el-button type="primary" icon="el-icon-search" size="medium"
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            size="medium"
+            @click="searchQueryClick"
             >搜尋</el-button
           >
         </div>
@@ -32,23 +36,33 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['searchQuery', 'resetQuery'],
+  setup(props, { emit }) {
     const searchDataConfig: any = {};
     const items = props.searchFormConfig.formData;
+
     for (const item of items) {
       searchDataConfig[item.field] = '';
     }
     const searchData = ref(searchDataConfig);
 
+    // reset button
     const resetBtn = () => {
-      for (const key in searchDataConfig) {
-        searchData.value[key] = searchDataConfig[key];
+      for (let key of items) {
+        searchData.value[key.field] = searchDataConfig[key.field];
       }
+      emit('resetQuery');
+    };
+
+    // search query
+    const searchQueryClick = () => {
+      emit('searchQuery', searchData);
     };
 
     return {
       searchData,
-      resetBtn
+      resetBtn,
+      searchQueryClick
     };
   }
 });

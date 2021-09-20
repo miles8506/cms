@@ -1,10 +1,19 @@
 <template>
   <div class="role">
     <div id="role_search">
-      <search-page :searchFormConfig="searchFormConfig" />
+      <search-page
+        :searchFormConfig="searchFormConfig"
+        ref="tablePageRef"
+        @searchQuery="searchQuery"
+        @resetQuery="resetQuery"
+      />
     </div>
     <div id="role_info">
-      <table-page :tablePageConfig="tablePageConfig" pathName="role" />
+      <table-page
+        :tablePageConfig="tablePageConfig"
+        pathName="role"
+        ref="tablePageRef"
+      />
     </div>
   </div>
 </template>
@@ -20,15 +29,25 @@ import TablePage from '@/components/tablePage';
 import { searchFormConfig } from './config/searchPage.config';
 import { tablePageConfig } from './config/tablePage.config';
 
+// hook
+import { searchPageControl } from '@/hook/searchPageControl';
+
 export default defineComponent({
   components: {
     SearchPage,
     TablePage
   },
   setup() {
+    const { tablePageRef, searchQuery, resetQuery } = {
+      ...searchPageControl()
+    };
+
     return {
       searchFormConfig,
-      tablePageConfig
+      tablePageConfig,
+      tablePageRef,
+      searchQuery,
+      resetQuery
     };
   }
 });

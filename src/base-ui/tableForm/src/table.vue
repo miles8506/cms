@@ -24,28 +24,27 @@
         label="序號"
         type="index"
         align="center"
-      ></el-table-column>
-      <template v-for="item in tableProps" :key="item.prop">
-        <el-table-column v-bind="item">
-          <template #default="scope">
-            <slot :name="item.slotName" :row="scope.row">
-              {{ scope.row[item.prop] }}
-            </slot>
-          </template>
-        </el-table-column>
+      ></el-table-column
+      ><template v-for="item in tableProps" :key="item.prop">
+        <el-table-column v-bind="item" :show-overflow-tooltip="true"
+          ><template #default="scope">
+            <slot :name="item.slotName" :row="scope.row">{{
+              scope.row[item.prop]
+            }}</slot>
+          </template></el-table-column
+        >
       </template>
     </el-table>
     <div class="footer">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="page.currentPage"
+        :page-sizes="[10, 20, 30]"
+        :page-size="page.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
-      >
-      </el-pagination>
+        :total="dataListCount"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -74,14 +73,45 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({
+        currentPage: 0,
+        pageSize: 10
+      })
+    },
+    dataListCount: {
+      type: Number,
+      default: 0
     }
   },
-  setup() {
+  emits: ['update:page'],
+  setup(props, { emit }) {
     const handleSelectChange = (value: any) => {
       console.log(value);
     };
+
+    // pagination
+    const handleSizeChange = (pageSize: number) => {
+      // console.log(value);
+      emit('update:page', {
+        ...props.page,
+        pageSize
+      });
+    };
+
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', {
+        ...props.page,
+        currentPage
+      });
+    };
+
     return {
-      handleSelectChange
+      handleSelectChange,
+      handleSizeChange,
+      handleCurrentChange
     };
   }
 });

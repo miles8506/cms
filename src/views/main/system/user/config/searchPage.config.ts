@@ -17,47 +17,47 @@ interface IsearchFormConfig {
 const searchFormConfig: IsearchFormConfig = {
   formData: [
     {
-      field: 'account',
+      field: 'id',
       type: 'input',
-      label: '帳號',
+      label: 'id',
       placeholder: '請輸入id查詢'
     },
     {
-      field: 'username',
+      field: 'name',
       type: 'input',
       label: '用戶名',
       placeholder: '請輸入用戶名查詢'
     },
     {
-      field: 'psw',
-      type: 'password',
-      label: '密碼',
+      field: 'realname',
+      type: 'input',
+      label: '真實姓名',
       placeholder: '請輸入密碼查詢'
     },
     {
-      field: 'habit',
+      field: 'cellphone',
+      type: 'input',
+      label: '電話號碼',
+      placeholder: '請輸入電話號碼'
+    },
+    {
+      field: 'enable',
       type: 'select',
-      label: '嗜好',
-      placeholder: '請選擇嗜好',
+      label: '用戶狀態',
+      placeholder: '請選擇用戶狀態',
       options: [
-        {
-          label: '籃球',
-          value: 'baseketball'
-        },
-        {
-          label: '足球',
-          value: 'football'
-        }
+        { title: '启用', value: 1 },
+        { title: '禁用', value: 0 }
       ]
     },
     {
-      field: 'dateRange',
+      field: 'createAt',
       type: 'datepicker',
-      label: '創建時間',
+      label: '创建时间',
       otherOptions: {
-        type: 'daterange',
-        startPlaceholder: '開始日期',
-        endPlaceholder: '結束日期'
+        startPlaceholder: '开始时间',
+        endPlaceholder: '结束时间',
+        type: 'daterange'
       }
     }
   ],
