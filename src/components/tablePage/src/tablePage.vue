@@ -12,7 +12,7 @@
           v-if="isCreate"
           type="primary"
           size="small"
-          @click="DialogVisible = true"
+          @click="addItemBtn"
           >新增</el-button
         >
       </template>
@@ -48,23 +48,20 @@
       <!-- control -->
       <template #control="scope">
         <div class="control_wrap">
-          <span
-            ><el-button
-              v-if="isUpdate"
-              type="text"
-              size="mini"
-              icon="el-icon-edit"
-              >編輯</el-button
-            ></span
-          >
-          <span @click="deleteClick(scope.row)"
-            ><el-button
-              v-if="isDelete"
-              type="text"
-              size="mini"
-              icon="el-icon-delete"
-              >刪除</el-button
-            ></span
+          ><el-button
+            v-if="isUpdate"
+            type="text"
+            size="mini"
+            icon="el-icon-edit"
+            @click="editItemBtn(scope.row)"
+            >編輯</el-button
+          ><el-button
+            v-if="isDelete"
+            type="text"
+            size="mini"
+            icon="el-icon-delete"
+            @click="deleteClick(scope.row)"
+            >刪除</el-button
           >
         </div>
       </template>
@@ -96,7 +93,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['addWindowStatus', 'editWindowStatus'],
+  setup(props, { emit }) {
     // 獲取userList data
     const store = useStore();
 
@@ -166,7 +164,13 @@ export default defineComponent({
       });
     };
 
-    const DialogVisible = ref(true);
+    // emit
+    const addItemBtn = () => {
+      emit('addWindowStatus');
+    };
+    const editItemBtn = (item: any) => {
+      emit('editWindowStatus', item);
+    };
 
     return {
       dataList,
@@ -179,7 +183,8 @@ export default defineComponent({
       isUpdate,
       isQuery,
       deleteClick,
-      DialogVisible
+      addItemBtn,
+      editItemBtn
     };
   }
 });

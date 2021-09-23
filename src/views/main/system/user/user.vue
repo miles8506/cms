@@ -7,12 +7,18 @@
         @resetQuery="resetQuery"
       />
     </div>
-    <window-page :searchFormConfig="windowFormConfig" />
+    <window-page
+      :searchFormConfig="windowFormConfig"
+      :defaultWindowData="defaultWindowData"
+      ref="windowPageRef"
+    />
     <div id="user_info">
       <table-page
         :tablePageConfig="tablePageConfig"
         pathName="users"
         ref="tablePageRef"
+        @addWindowStatus="addWindowStatus"
+        @editWindowStatus="editWindowStatus"
       />
     </div>
   </div>
@@ -33,6 +39,7 @@ import { windowFormConfig } from '@/views/main/system/user/config/windowPageConf
 
 // hook
 import { searchPageControl } from '@/hook/searchPageControl';
+import { windowPageControl } from '@/hook/windowpageControl';
 
 export default defineComponent({
   components: {
@@ -45,6 +52,28 @@ export default defineComponent({
     const { tablePageRef, searchQuery, resetQuery } = {
       ...searchPageControl()
     };
+    const {
+      windowPageRef,
+      defaultWindowData,
+      addWindowStatus,
+      editWindowStatus
+    } = windowPageControl();
+
+    // const windowPageRef = ref<InstanceType<typeof WindowPage>>();
+    // const defaultWindowData = ref({});
+
+    // const addWindowStatus = () => {
+    //   if (windowPageRef.value) {
+    //     windowPageRef.value.DialogVisible = true;
+    //   }
+    // };
+
+    // const editWindowStatus = (item: any) => {
+    //   defaultWindowData.value = item;
+    //   if (windowPageRef.value) {
+    //     windowPageRef.value.DialogVisible = true;
+    //   }
+    // };
 
     return {
       searchFormConfig,
@@ -52,7 +81,11 @@ export default defineComponent({
       tablePageRef,
       searchQuery,
       resetQuery,
-      windowFormConfig
+      windowFormConfig,
+      addWindowStatus,
+      editWindowStatus,
+      windowPageRef,
+      defaultWindowData
     };
   }
 });
