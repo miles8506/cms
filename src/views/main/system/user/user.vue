@@ -7,6 +7,7 @@
         @resetQuery="resetQuery"
       />
     </div>
+    <window-page :searchFormConfig="windowFormConfig" />
     <div id="user_info">
       <table-page
         :tablePageConfig="tablePageConfig"
@@ -23,10 +24,12 @@ import { defineComponent } from 'vue';
 // components
 import SearchPage from '@/components/searchPage/src/searchPage.vue';
 import TablePage from '@/components/tablePage';
+import WindowPage from '@/components/windowPage';
 
 // config
 import { searchFormConfig } from './config/searchPage.config';
 import { tablePageConfig } from './config/tablePage.config';
+import { windowFormConfig } from '@/views/main/system/user/config/windowPageConfig';
 
 // hook
 import { searchPageControl } from '@/hook/searchPageControl';
@@ -34,7 +37,8 @@ import { searchPageControl } from '@/hook/searchPageControl';
 export default defineComponent({
   components: {
     SearchPage,
-    TablePage
+    TablePage,
+    WindowPage
   },
 
   setup() {
@@ -47,7 +51,8 @@ export default defineComponent({
       tablePageConfig,
       tablePageRef,
       searchQuery,
-      resetQuery
+      resetQuery,
+      windowFormConfig
     };
   }
 });

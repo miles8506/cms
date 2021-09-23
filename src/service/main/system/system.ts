@@ -9,3 +9,10 @@ export function requestSystemPage(data: any) {
     data: data.queryInfo
   });
 }
+
+// delete
+export function deleteTableItem(url: any) {
+  return ApiRequest.delete<IDataType>({
+    url: url
+  });
+}

@@ -71,6 +71,21 @@ export function mapBreadcrump(
   //     return userMenus;
   //   }
   // }
-
   return mapToPath(userMenus, currentPath, breadcrumbArr);
+}
+
+// permission
+export function permissionUserSave(userMenu: any) {
+  const permissions: string[] = [];
+  const recursion = (userMenu: any) => {
+    for (const menu of userMenu) {
+      if (menu.type === 1 || menu.type === 2) {
+        recursion(menu.children ?? []);
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission);
+      }
+    }
+  };
+  recursion(userMenu);
+  return permissions;
 }

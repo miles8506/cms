@@ -2,7 +2,8 @@ import type { loginType } from './login/type';
 import type { IsystemType } from './main/system/type';
 
 interface IrootStore {
-  name: string;
+  offset: number;
+  size: number;
 }
 
 interface IrootStoreWithModule {

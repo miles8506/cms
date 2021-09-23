@@ -10,9 +10,19 @@ import { system } from './main/system/system';
 
 const store = createStore<IrootStore>({
   state() {
-    return {};
+    return {
+      offset: 0,
+      size: 10
+    };
   },
-  mutations: {},
+  mutations: {
+    setOffset(state, payload: any) {
+      state.offset = payload;
+    },
+    setSize(state, payload: any) {
+      state.size = payload;
+    }
+  },
   getters: {},
   actions: {},
   modules: {

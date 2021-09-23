@@ -1,7 +1,7 @@
 <template>
   <div id="search_form">
     <slot name="search_header"></slot>
-    <el-form label-width="120px">
+    <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formData" :key="item">
           <el-col v-bind="colConfig" :style="itemStyle">
@@ -76,7 +76,7 @@ export default defineComponent({
     },
     searchData: {
       type: Object,
-      default: () => ({}),
+      // default: () => ({}),
       required: true
     }
   },
@@ -84,6 +84,7 @@ export default defineComponent({
   setup(props, { emit }) {
     // 監聽v-model(for user.vue組件)數據
     const searchDataRef = ref({ ...props.searchData });
+
     watch(
       searchDataRef,
       (newData) => {

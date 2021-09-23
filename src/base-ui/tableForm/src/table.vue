@@ -12,6 +12,7 @@
       :data="dataList"
       @selection-change="handleSelectChange"
       style="width: 100%"
+      v-bind="propSelectChild"
     >
       <el-table-column
         v-if="showSelectColumn"
@@ -37,6 +38,7 @@
     </el-table>
     <div class="footer">
       <el-pagination
+        v-if="isShowPagination"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="page.currentPage"
@@ -84,6 +86,14 @@ export default defineComponent({
     dataListCount: {
       type: Number,
       default: 0
+    },
+    propSelectChild: {
+      type: Object,
+      default: () => ({})
+    },
+    isShowPagination: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['update:page'],
@@ -94,7 +104,6 @@ export default defineComponent({
 
     // pagination
     const handleSizeChange = (pageSize: number) => {
-      // console.log(value);
       emit('update:page', {
         ...props.page,
         pageSize

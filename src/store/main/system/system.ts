@@ -1,5 +1,8 @@
 // service
-import { requestSystemPage } from '@/service/main/system/system';
+import {
+  requestSystemPage,
+  deleteTableItem
+} from '@/service/main/system/system';
 
 //type
 import { Module } from 'vuex';
@@ -15,7 +18,9 @@ const system: Module<IsystemType, IrootStore> = {
       roleList: [],
       roleCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     };
   },
 
@@ -37,6 +42,12 @@ const system: Module<IsystemType, IrootStore> = {
     },
     setGoodsCount(state, payload: number) {
       state.goodsCount = payload;
+    },
+    setMenuList(state, payload: any[]) {
+      state.menuList = payload;
+    },
+    setMenuCount(state, payload: number) {
+      state.menuCount = payload;
     }
   },
 
@@ -61,18 +72,9 @@ const system: Module<IsystemType, IrootStore> = {
   },
 
   actions: {
+    // get list
     async getPageAction({ commit }, payload: any) {
       const pathUrl = `${payload.url}/list`;
-
-      // switch (payload.url) {
-      //   case 'users':
-      //     pathUrl = '/users/list';
-      //     break;
-      //   case 'role':
-      //     pathUrl = '/role/list';
-      //     break;
-      // }
-
       const capitalPathName =
         payload.url.charAt(0).toUpperCase() + payload.url.slice(1);
 
@@ -83,6 +85,24 @@ const system: Module<IsystemType, IrootStore> = {
         });
         commit(`set${capitalPathName}List`, res.data.list);
         commit(`set${capitalPathName}Count`, res.data.totalCount);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    // deleteitem
+    async deletePageAction({ dispatch }, payload: any) {
+      try {
+        const url = `${payload.pathName}/${payload.id} `;
+        await deleteTableItem(url);
+        dispatch('getPageAction', {
+          url: payload.pathName,
+          queryInfo: {
+            offset: 0,
+            size: 10
+          },
+          ...payload.searchData
+        });
       } catch (err) {
         console.log(err);
       }

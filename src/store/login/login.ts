@@ -15,9 +15,7 @@ import type { RouteRecordRaw } from 'vue-router';
 
 // utils
 import { localCache } from '@/utils/cache';
-
-// user mapMenu
-import { mapMenu } from '@/utils/mapMenu';
+import { mapMenu, permissionUserSave } from '@/utils/mapMenu';
 
 let firstMenu: any = null;
 
@@ -27,7 +25,8 @@ const loginModule: Module<loginType, IrootStore> = {
     return {
       token: '',
       userInfo: {},
-      userMenu: ''
+      userMenu: '',
+      userPermission: []
     };
   },
   mutations: {
@@ -49,6 +48,10 @@ const loginModule: Module<loginType, IrootStore> = {
         router.addRoute('main', route);
         if (!firstMenu) firstMenu = route;
       });
+
+      // user permission
+      const permission = permissionUserSave(state.userMenu);
+      state.userPermission = permission;
     }
   },
   actions: {

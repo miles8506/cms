@@ -32,7 +32,8 @@ import {
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog
 } from 'element-plus';
 import 'element-plus/lib/theme-chalk/base.css';
 const Elcomponents = [
@@ -66,7 +67,8 @@ const Elcomponents = [
   ElTable,
   ElTableColumn,
   ElPagination,
-  ElImage
+  ElImage,
+  ElDialog
 ];
 
 export function registerElementPlus(app: App<Element>): void {

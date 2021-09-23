@@ -5,6 +5,8 @@ interface IsystemType {
   roleCount: number;
   goodsList: any[];
   goodsCount: number;
+  menuList: any[];
+  menuCount: number;
 }
 
 export { IsystemType };

@@ -6,8 +6,6 @@ export function searchPageControl() {
 
   // 搜尋
   const searchQuery = (searchData: any) => {
-    console.log(searchData.value);
-
     tablePageRef.value?.getPageAciton(searchData);
   };
 

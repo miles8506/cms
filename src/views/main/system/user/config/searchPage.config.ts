@@ -53,10 +53,10 @@ const searchFormConfig: IsearchFormConfig = {
     {
       field: 'createAt',
       type: 'datepicker',
-      label: '创建时间',
+      label: '創建時間',
       otherOptions: {
-        startPlaceholder: '开始时间',
-        endPlaceholder: '结束时间',
+        startPlaceholder: '開始時間',
+        endPlaceholder: '結束時間',
         type: 'daterange'
       }
     }

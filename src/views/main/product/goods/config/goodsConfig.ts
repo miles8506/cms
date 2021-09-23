@@ -13,7 +13,8 @@ export const tablePageConfig = {
     {
       prop: 'newPrice',
       label: '新價格',
-      align: 'center'
+      align: 'center',
+      slotName: 'newPrice'
     },
     {
       prop: 'imgUrl',
