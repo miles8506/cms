@@ -8,8 +8,9 @@
       />
     </div>
     <window-page
-      :searchFormConfig="windowFormConfig"
+      :searchFormConfig="windowFormConfigRef"
       :defaultWindowData="defaultWindowData"
+      pathName="users"
       ref="windowPageRef"
     />
     <div id="user_info">
@@ -25,7 +26,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
+
+// store
+import { useStore } from '@/store';
 
 // components
 import SearchPage from '@/components/searchPage/src/searchPage.vue';
@@ -49,31 +53,63 @@ export default defineComponent({
   },
 
   setup() {
+    const store = useStore();
+
+    const windowFormConfigRef = computed(() => {
+      // department
+      const departmentList = store.state.entireDepartment;
+      const departmentFind = windowFormConfig.formData.find((item) => {
+        return item.field === 'departmentId';
+      });
+      if (departmentFind) {
+        departmentFind.options = departmentList.map((item) => {
+          return {
+            title: item.name,
+            value: item.id
+          };
+        });
+      }
+
+      // role
+      const roleList = store.state.entireRole;
+      const RoleFind = windowFormConfig.formData.find((item) => {
+        return item.field === 'roleId';
+      });
+      if (RoleFind) {
+        RoleFind.options = roleList.map((item) => {
+          return {
+            title: item.name,
+            value: item.id
+          };
+        });
+      }
+      return windowFormConfig;
+    });
+
+    // searchPageControl hook
     const { tablePageRef, searchQuery, resetQuery } = {
       ...searchPageControl()
+    };
+
+    // windowPageControl hook
+    const createCallBackFn = () => {
+      const pswIpt = windowFormConfig.formData.find(
+        (item) => item.field === 'password'
+      );
+      if (pswIpt) pswIpt.isHide = false;
+    };
+    const editCallBackFn = () => {
+      const pswIpt = windowFormConfig.formData.find(
+        (item) => item.field === 'password'
+      );
+      if (pswIpt) pswIpt.isHide = true;
     };
     const {
       windowPageRef,
       defaultWindowData,
       addWindowStatus,
       editWindowStatus
-    } = windowPageControl();
-
-    // const windowPageRef = ref<InstanceType<typeof WindowPage>>();
-    // const defaultWindowData = ref({});
-
-    // const addWindowStatus = () => {
-    //   if (windowPageRef.value) {
-    //     windowPageRef.value.DialogVisible = true;
-    //   }
-    // };
-
-    // const editWindowStatus = (item: any) => {
-    //   defaultWindowData.value = item;
-    //   if (windowPageRef.value) {
-    //     windowPageRef.value.DialogVisible = true;
-    //   }
-    // };
+    } = windowPageControl(createCallBackFn, editCallBackFn);
 
     return {
       searchFormConfig,
@@ -81,7 +117,7 @@ export default defineComponent({
       tablePageRef,
       searchQuery,
       resetQuery,
-      windowFormConfig,
+      windowFormConfigRef,
       addWindowStatus,
       editWindowStatus,
       windowPageRef,

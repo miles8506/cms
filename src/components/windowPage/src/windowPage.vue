@@ -2,7 +2,7 @@
   <div class="window_page">
     <el-dialog
       v-model="DialogVisible"
-      title="新建用戶"
+      :title="searchFormConfig.windowTitle"
       width="30%"
       center
       destroy-on-close
@@ -10,10 +10,8 @@
       <search-form v-bind="searchFormConfig" v-model:searchData="inputData" />
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="DialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="DialogVisible = false"
-            >Create</el-button
-          >
+          <el-button @click="cancelBtn">Cancel</el-button>
+          <el-button type="primary" @click="saveBtn">Save</el-button>
         </span>
       </template>
     </el-dialog>
@@ -22,6 +20,9 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue';
+
+// vuex
+import { useStore } from '@/store';
 
 // component
 import SearchForm from '@/base-ui/searchForm';
@@ -38,13 +39,19 @@ export default defineComponent({
     defaultWindowData: {
       type: Object,
       default: () => ({})
+    },
+    pathName: {
+      type: String,
+      required: true
     }
   },
   setup(props) {
-    // dialog
+    const store = useStore();
+
+    // dialog status
     const DialogVisible = ref(false);
 
-    // v-model input
+    // v-model(input) for component
     const inputData = ref<any>({});
 
     watch(
@@ -54,12 +61,36 @@ export default defineComponent({
         for (const item of formData) {
           inputData.value[item.field] = newData[item.field];
         }
+        // console.log(props.defaultWindowData);
       }
     );
 
+    // create&edit item
+    const saveBtn = () => {
+      DialogVisible.value = false;
+      if (Object.keys(props.defaultWindowData).length > 0) {
+        store.dispatch('system/editPageAction', {
+          pathName: props.pathName,
+          id: props.defaultWindowData.id,
+          eidtData: { ...inputData.value }
+        });
+      } else {
+        store.dispatch('system/createPageAction', {
+          pathName: props.pathName,
+          newData: { ...inputData.value }
+        });
+      }
+    };
+
+    const cancelBtn = () => {
+      DialogVisible.value = false;
+    };
+
     return {
       DialogVisible,
-      inputData
+      inputData,
+      saveBtn,
+      cancelBtn
     };
   }
 });

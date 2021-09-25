@@ -5,16 +5,11 @@ interface IsearchFormConfig {
   itemStyle?: any;
   labelWidth?: string;
   colConfig?: any;
+  windowTitle: string;
 }
 
-// interface IsearchDataType {
-//   account?: string;
-//   psw?: string;
-//   habit?: string;
-//   dateRange?: any[];
-// }
-
 const windowFormConfig: IsearchFormConfig = {
+  windowTitle: '新建用戶',
   formData: [
     {
       field: 'name',
@@ -32,13 +27,28 @@ const windowFormConfig: IsearchFormConfig = {
       field: 'password',
       type: 'password',
       label: '用户密碼',
-      placeholder: '請輸入密碼'
+      placeholder: '請輸入密碼',
+      isHide: true
     },
     {
       field: 'cellphone',
       type: 'input',
       label: '電話號碼',
       placeholder: '請輸入電話號碼'
+    },
+    {
+      field: 'departmentId',
+      type: 'select',
+      label: '選擇部門',
+      placeholder: '請選擇部門',
+      options: []
+    },
+    {
+      field: 'roleId',
+      type: 'select',
+      label: '選擇角色',
+      placeholder: '請選擇角色',
+      options: []
     }
   ],
   itemStyle: {},

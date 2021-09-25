@@ -48,7 +48,7 @@
       <!-- control -->
       <template #control="scope">
         <div class="control_wrap">
-          ><el-button
+          <el-button
             v-if="isUpdate"
             type="text"
             size="mini"

@@ -16,3 +16,19 @@ export function deleteTableItem(url: any) {
     url: url
   });
 }
+
+// create
+export function createPageItem(url: string, newData: any) {
+  return ApiRequest.post<IDataType>({
+    url: url,
+    data: newData
+  });
+}
+
+// edit
+export function editPageItem(url: string, editData: any) {
+  return ApiRequest.patch<IDataType>({
+    url: url,
+    data: editData
+  });
+}

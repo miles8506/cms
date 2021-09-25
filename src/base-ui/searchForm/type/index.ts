@@ -7,6 +7,7 @@ interface IformType {
   placeholder?: string;
   options?: any[];
   otherOptions?: any;
+  isHide?: boolean;
 }
 
 export { IformType };

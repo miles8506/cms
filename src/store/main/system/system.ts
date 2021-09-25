@@ -1,7 +1,9 @@
 // service
 import {
   requestSystemPage,
-  deleteTableItem
+  deleteTableItem,
+  createPageItem,
+  editPageItem
 } from '@/service/main/system/system';
 
 //type
@@ -90,18 +92,56 @@ const system: Module<IsystemType, IrootStore> = {
       }
     },
 
-    // deleteitem
-    async deletePageAction({ dispatch }, payload: any) {
+    // delete item
+    async deletePageAction({ dispatch, rootState }, payload: any) {
       try {
         const url = `${payload.pathName}/${payload.id} `;
         await deleteTableItem(url);
         dispatch('getPageAction', {
           url: payload.pathName,
           queryInfo: {
-            offset: 0,
-            size: 10
-          },
-          ...payload.searchData
+            offset: rootState.offset,
+            size: rootState.size
+          }
+          // ...payload.searchData
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    // create item
+    async createPageAction({ dispatch, rootState }, payload: any) {
+      try {
+        const { pathName, newData } = payload;
+        const pageUrl = `/${pathName}`;
+        await createPageItem(pageUrl, newData);
+
+        dispatch('getPageAction', {
+          url: payload.pathName,
+          queryInfo: {
+            offset: rootState.offset,
+            size: rootState.size
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    // eidt item
+    async editPageAction({ rootState, dispatch }, payload: any) {
+      try {
+        const { pathName, id, eidtData } = payload;
+        const pageUrl = `/${pathName}/${id}`;
+        await editPageItem(pageUrl, eidtData);
+
+        dispatch('getPageAction', {
+          url: payload.pathName,
+          queryInfo: {
+            offset: rootState.offset,
+            size: rootState.size
+          }
         });
       } catch (err) {
         console.log(err);

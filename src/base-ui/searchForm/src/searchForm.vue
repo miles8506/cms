@@ -4,7 +4,7 @@
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formData" :key="item">
-          <el-col v-bind="colConfig" :style="itemStyle">
+          <el-col v-if="!item.isHide" v-bind="colConfig" :style="itemStyle">
             <!-- type -> input&password -->
             <template v-if="item.type === 'input' || item.type === 'password'">
               <el-form-item :label="item.label"
@@ -19,8 +19,8 @@
                   v-model="searchDataRef[item.field]"
                   ><el-option
                     v-for="option in item.options"
-                    :key="option"
-                    :value="option.title"
+                    :key="option.value"
+                    :value="option.value"
                     >{{ option.title }}</el-option
                   ></el-select
                 >

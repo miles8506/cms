@@ -1,14 +1,22 @@
 import { ref } from 'vue';
 import WindowPage from '@/components/windowPage';
 
-export function windowPageControl() {
+type createCbFn = () => void;
+type editCbFn = () => void;
+
+export function windowPageControl(
+  createCallBackFn?: createCbFn,
+  editCallBackFn?: editCbFn
+) {
   const windowPageRef = ref<InstanceType<typeof WindowPage>>();
   const defaultWindowData = ref({});
 
   const addWindowStatus = () => {
+    defaultWindowData.value = {};
     if (windowPageRef.value) {
       windowPageRef.value.DialogVisible = true;
     }
+    createCallBackFn && createCallBackFn();
   };
 
   const editWindowStatus = (item: any) => {
@@ -16,6 +24,7 @@ export function windowPageControl() {
     if (windowPageRef.value) {
       windowPageRef.value.DialogVisible = true;
     }
+    editCallBackFn && editCallBackFn();
   };
 
   return {
