@@ -6,6 +6,7 @@ interface IrootStore {
   size: number;
   entireDepartment: any[];
   entireRole: any[];
+  entireMenu: any[];
 }
 
 interface IrootStoreWithModule {

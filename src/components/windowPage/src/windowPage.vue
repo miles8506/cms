@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <search-form v-bind="searchFormConfig" v-model:searchData="inputData" />
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="cancelBtn">Cancel</el-button>
@@ -43,6 +44,10 @@ export default defineComponent({
     pathName: {
       type: String,
       required: true
+    },
+    otherData: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup(props) {
@@ -61,23 +66,24 @@ export default defineComponent({
         for (const item of formData) {
           inputData.value[item.field] = newData[item.field];
         }
-        // console.log(props.defaultWindowData);
       }
     );
 
     // create&edit item
     const saveBtn = () => {
       DialogVisible.value = false;
+      console.log(inputData.value, props.otherData);
+
       if (Object.keys(props.defaultWindowData).length > 0) {
         store.dispatch('system/editPageAction', {
           pathName: props.pathName,
           id: props.defaultWindowData.id,
-          eidtData: { ...inputData.value }
+          eidtData: { ...inputData.value, ...props.otherData }
         });
       } else {
         store.dispatch('system/createPageAction', {
           pathName: props.pathName,
-          newData: { ...inputData.value }
+          newData: { ...inputData.value, ...props.otherData }
         });
       }
     };

@@ -55,13 +55,16 @@ const loginModule: Module<loginType, IrootStore> = {
     }
   },
   actions: {
-    async getLoginApi({ commit }, payload: IaccountInfo) {
+    async getLoginApi({ commit, dispatch }, payload: IaccountInfo) {
       try {
         // 驗證帳號密碼及接收token
         const loginApi = await loginApiFn(payload);
         const { token } = loginApi.data;
         commit('changeLoginInfo', { token });
         localCache.setLocalAccount('token', token);
+
+        // 獲取role&department list數據
+        dispatch('initialDataAciton', null, { root: true });
 
         // 獲取user info
         const userInfo = await userInfoFn(loginApi.data.id);
@@ -77,10 +80,13 @@ const loginModule: Module<loginType, IrootStore> = {
         console.log(err);
       }
     },
-    setupUserInfo({ commit }) {
+    setupUserInfo({ commit, dispatch }) {
       const token: string = localCache.getLocalAccount('token');
       if (token) {
         commit('changeLoginInfo', { token });
+
+        // 獲取role&department list數據
+        dispatch('initialDataAciton', null, { root: true });
       }
       const info = localCache.getLocalAccount('info');
       if (info) {

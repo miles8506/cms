@@ -8,7 +8,7 @@
     </span>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item>退出登入</el-dropdown-item>
+        <el-dropdown-item @click="logoutAccount">退出登入</el-dropdown-item>
         <el-dropdown-item divided>用戶信息</el-dropdown-item>
         <el-dropdown-item>系統管理</el-dropdown-item>
       </el-dropdown-menu>
@@ -18,15 +18,30 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+
+//router
+import { useRouter } from 'vue-router';
+
+// vuex
 import { useStore } from 'vuex';
+
+// utils
+import { localCache } from '@/utils/cache';
 
 export default defineComponent({
   setup() {
+    const router = useRouter();
     const store = useStore();
     const userName = computed(() => store.state.loginModule.userInfo.name);
 
+    // logout
+    const logoutAccount = () => {
+      localCache.removeLocalAccount('token');
+      router.push('/main');
+    };
     return {
-      userName
+      userName,
+      logoutAccount
     };
   }
 });

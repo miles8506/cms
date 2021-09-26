@@ -16,6 +16,8 @@ export function windowPageControl(
     if (windowPageRef.value) {
       windowPageRef.value.DialogVisible = true;
     }
+
+    // 隱藏特定input
     createCallBackFn && createCallBackFn();
   };
 
@@ -24,6 +26,8 @@ export function windowPageControl(
     if (windowPageRef.value) {
       windowPageRef.value.DialogVisible = true;
     }
+
+    // 隱藏特定input
     editCallBackFn && editCallBackFn();
   };
 

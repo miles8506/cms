@@ -17,7 +17,8 @@ const store = createStore<IrootStore>({
       offset: 0,
       size: 10,
       entireDepartment: [],
-      entireRole: []
+      entireRole: [],
+      entireMenu: []
     };
   },
   mutations: {
@@ -32,6 +33,9 @@ const store = createStore<IrootStore>({
     },
     setEntireRole(state, roleList: any[]) {
       state.entireRole = roleList;
+    },
+    setEntireMenu(state, menuList: any[]) {
+      state.entireMenu = menuList;
     }
   },
   getters: {},
@@ -58,9 +62,17 @@ const store = createStore<IrootStore>({
         });
         const { list: roleList } = roleRes.data;
 
+        // menu
+        const menuRes = await requestSystemPage({
+          url: '/menu/list',
+          data: {}
+        });
+        const { list: menuList } = menuRes.data;
+
         // commit
         commit('setEntireDepartment', departmentList);
         commit('setEntireRole', roleList);
+        commit('setEntireMenu', menuList);
       } catch (err) {
         console.log(err);
       }
@@ -74,7 +86,6 @@ const store = createStore<IrootStore>({
 
 export function setupUserInfoFn() {
   store.dispatch('loginModule/setupUserInfo');
-  store.dispatch('initialDataAciton');
 }
 
 export function useStore(): Store<IrootStoreMain> {
