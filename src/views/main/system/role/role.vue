@@ -15,15 +15,16 @@
       :defaultWindowData="defaultWindowData"
       :otherData="otherData"
     >
-      <template #default>
-        <el-tree
-          :data="menuList"
-          show-checkbox
-          node-key="id"
-          :props="{ children: 'children', label: 'name' }"
-          @check="handleSelect"
-        />
-      </template>
+      <!-- <template #default> -->
+      <el-tree
+        ref="elTreeRef"
+        :data="menuList"
+        show-checkbox
+        node-key="id"
+        :props="{ children: 'children', label: 'name' }"
+        @check="handleSelect"
+      />
+      <!-- </template> -->
     </window-page>
     <div id="role_info">
       <table-page
@@ -38,12 +39,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, computed, ref, nextTick } from 'vue';
 
 // vuex
 import { useStore } from '@/store';
 
 // component
+import { ElTree } from 'element-plus';
 import SearchPage from '@/components/searchPage/src/searchPage.vue';
 import TablePage from '@/components/tablePage';
 import WindowPage from '@/components/windowPage';
@@ -57,6 +59,9 @@ import { windowFormConfig } from './config/windowPageConfig';
 import { searchPageControl } from '@/hook/searchPageControl';
 import { windowPageControl } from '@/hook/windowpageControl';
 
+// utils
+import { mapLeafKey } from '@/utils/mapMenu';
+
 export default defineComponent({
   components: {
     SearchPage,
@@ -69,12 +74,21 @@ export default defineComponent({
       ...searchPageControl()
     };
 
+    // eidt_callbackfunction eltree
+    const elTreeRef = ref<InstanceType<typeof ElTree>>();
+    const editCallbackFn = (menuList: any) => {
+      const leafKey = mapLeafKey(menuList);
+      nextTick(() => {
+        elTreeRef.value?.setCheckedKeys(leafKey, false);
+      });
+    };
+
     const {
       windowPageRef,
       defaultWindowData,
       addWindowStatus,
       editWindowStatus
-    } = windowPageControl();
+    } = windowPageControl(undefined, editCallbackFn);
 
     // el-tree checkevent
     const menuList = computed(() => store.state.entireMenu);
@@ -97,7 +111,8 @@ export default defineComponent({
       editWindowStatus,
       menuList,
       handleSelect,
-      otherData
+      otherData,
+      elTreeRef
     };
   }
 });

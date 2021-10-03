@@ -7,6 +7,7 @@ import { IrootStore, IrootStoreMain } from './type';
 // module
 import { loginModule } from './login/login';
 import { system } from './main/system/system';
+import { dashboardModule } from './main/analysis/dashboard/dashboard';
 
 // api
 import { requestSystemPage } from '@/service/main/system/system';
@@ -80,7 +81,8 @@ const store = createStore<IrootStore>({
   },
   modules: {
     loginModule,
-    system
+    system,
+    dashboardModule
   }
 });
 

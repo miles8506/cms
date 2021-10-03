@@ -89,3 +89,16 @@ export function permissionUserSave(userMenu: any) {
   recursion(userMenu);
   return permissions;
 }
+
+// leafNode
+export function mapLeafKey(menuList: any[]) {
+  const leafKeyArr: any[] = [];
+  const recursionKey = (menuList: any[]) => {
+    for (const item of menuList) {
+      item.children ? recursionKey(item.children) : leafKeyArr.push(item.id);
+    }
+  };
+
+  recursionKey(menuList);
+  return leafKeyArr;
+}

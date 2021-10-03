@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import WindowPage from '@/components/windowPage';
 
 type createCbFn = () => void;
-type editCbFn = () => void;
+type editCbFn = (item?: any[]) => void;
 
 export function windowPageControl(
   createCallBackFn?: createCbFn,
@@ -13,9 +13,7 @@ export function windowPageControl(
 
   const addWindowStatus = () => {
     defaultWindowData.value = {};
-    if (windowPageRef.value) {
-      windowPageRef.value.DialogVisible = true;
-    }
+    if (windowPageRef.value) windowPageRef.value.DialogVisible = true;
 
     // 隱藏特定input
     createCallBackFn && createCallBackFn();
@@ -23,12 +21,10 @@ export function windowPageControl(
 
   const editWindowStatus = (item: any) => {
     defaultWindowData.value = item;
-    if (windowPageRef.value) {
-      windowPageRef.value.DialogVisible = true;
-    }
+    if (windowPageRef.value) windowPageRef.value.DialogVisible = true;
 
     // 隱藏特定input
-    editCallBackFn && editCallBackFn();
+    editCallBackFn && editCallBackFn(item.menuList);
   };
 
   return {

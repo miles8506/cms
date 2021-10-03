@@ -1,5 +1,6 @@
 import type { loginType } from './login/type';
 import type { IsystemType } from './main/system/type';
+import type { IdashboardState } from './main/analysis/dashboard/type';
 
 interface IrootStore {
   offset: number;
@@ -12,6 +13,7 @@ interface IrootStore {
 interface IrootStoreWithModule {
   loginModule: loginType;
   system: IsystemType;
+  dashboardModule: IdashboardState;
 }
 
 type IrootStoreMain = IrootStore & IrootStoreWithModule;
